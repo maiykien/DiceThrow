@@ -2,14 +2,12 @@ package edu.temple.dicethrow
 
 import android.os.Bundle
 import android.widget.Button
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var dieFragment: DieFragment
+    private lateinit var dieFragment1: DieFragment
+    private lateinit var dieFragment2: DieFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,26 +15,22 @@ class MainActivity : AppCompatActivity() {
 
         val rollButton = findViewById<Button>(R.id.rollDiceButton)
 
-        // Create fragment
-         dieFragment = DieFragment().apply {
-            arguments = Bundle().apply {
-                putInt("sidenumber", 6)
-            }
-        }
+        // ✅ Create first die (6 sides)
+        dieFragment1 = DieFragment.newInstance(6)
 
-        // Add fragment to screen
+        // ✅ Create second die (6 sides, could be any number)
+        dieFragment2 = DieFragment.newInstance(6)
+
+        // ✅ Add fragments to screen
         supportFragmentManager.beginTransaction()
-            .add(R.id.fragmentContainerView, dieFragment)
+            .replace(R.id.fragmentContainerView1, dieFragment1)
+            .replace(R.id.fragmentContainerView2, dieFragment2)
             .commit()
 
-        // Button click → roll dice
+        // ✅ Button click → roll both dice
         rollButton.setOnClickListener {
-            dieFragment.throwDie()
+            dieFragment1.throwDie()
+            dieFragment2.throwDie()
         }
-
-
-
-
     }
 }
-

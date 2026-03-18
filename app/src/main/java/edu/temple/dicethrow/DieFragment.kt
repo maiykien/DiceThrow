@@ -10,18 +10,27 @@ import kotlin.random.Random
 
 class DieFragment : Fragment() {
 
-    val DIESIDE = "sidenumber"
+    private lateinit var dieTextView: TextView
+    private var dieSides: Int = 6  // default value
 
-    lateinit var dieTextView: TextView
+    companion object {
+        private const val ARG_SIDES = "sidenumber"
 
-    var dieSides: Int = 6
+        // Factory Method to create a DieFragment with custom sides
+        fun newInstance(sides: Int = 6): DieFragment {
+            val fragment = DieFragment()
+            val args = Bundle()
+            args.putInt(ARG_SIDES, sides)
+            fragment.arguments = args
+            return fragment
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Safely get the number of sides from arguments
         arguments?.let {
-            it.getInt(DIESIDE).run {
-                dieSides = this
-            }
+            dieSides = it.getInt(ARG_SIDES, 6)
         }
     }
 
@@ -37,13 +46,14 @@ class DieFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        throwDie()
-        view.setOnClickListener{
-            throwDie()
+        throwDie()  //
+        view.setOnClickListener {
+            throwDie()  //
         }
     }
 
+    // Public method to throw the die
     fun throwDie() {
-        dieTextView.text = Random.nextInt(1,dieSides + 1).toString()
+        dieTextView.text = Random.nextInt(1, dieSides + 1).toString()
     }
 }
