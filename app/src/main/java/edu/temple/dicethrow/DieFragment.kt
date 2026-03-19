@@ -8,10 +8,15 @@ import android.view.ViewGroup
 import android.widget.TextView
 import kotlin.random.Random
 
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.Observer
+
 class DieFragment : Fragment() {
 
     private lateinit var dieTextView: TextView
     private var dieSides: Int = 6  // default value
+    private lateinit var viewModel: DieViewModel
+
 
     companion object {
         private const val ARG_SIDES = "sidenumber"
@@ -44,6 +49,7 @@ class DieFragment : Fragment() {
         }
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         throwDie()  //
@@ -51,6 +57,28 @@ class DieFragment : Fragment() {
             throwDie()  //
         }
     }
+
+    /*
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?)
+    {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel = ViewModelProvider(this).get(DieViewModel::class.java)
+
+        viewModel.setSides(dieSides)
+
+        // Observe LiveData
+        viewModel.dieValue.observe(viewLifecycleOwner, Observer { value ->
+            dieTextView.text = value.toString()
+        })
+
+        // Click to roll
+        view.setOnClickListener {
+            viewModel.rollDie()
+        }
+    }*/
+
 
     // Public method to throw the die
     fun throwDie() {

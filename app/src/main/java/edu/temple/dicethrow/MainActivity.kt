@@ -15,19 +15,19 @@ class MainActivity : AppCompatActivity() {
 
         val rollButton = findViewById<Button>(R.id.rollDiceButton)
 
-        // ✅ Create first die (6 sides)
+        //  Create first die (6 sides)
         dieFragment1 = DieFragment.newInstance(6)
 
-        // ✅ Create second die (6 sides, could be any number)
+        //  Create second die (6 sides, could be any number)
         dieFragment2 = DieFragment.newInstance(6)
 
-        // ✅ Add fragments to screen
+        //  Add fragments to screen
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainerView1, dieFragment1)
             .replace(R.id.fragmentContainerView2, dieFragment2)
             .commit()
 
-        // ✅ Button click → roll both dice
+        //  Button click → roll both dice
         rollButton.setOnClickListener {
             dieFragment1.throwDie()
             dieFragment2.throwDie()
